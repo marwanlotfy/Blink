@@ -1,0 +1,34 @@
+{
+    "name": "marwanlotfy/blink",
+    "description": "Blink is a library that will make you have chat in your laravel application",
+    "type": "library",
+    "keywords": [
+        "marwanLotfy",
+        "Blink",
+        "Wink",
+        "Chat",
+        "Laravel"
+    ],
+    "homepage": "https://github.com/marwanlotfy/blink",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "marwanLotfy",
+            "email": "marwandevelop@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Blink\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Blink\\BlinkServiceProvider"
+            ]
+        }
+    },
+    "require": {}
+}
