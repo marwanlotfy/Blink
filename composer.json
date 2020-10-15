@@ -1,6 +1,6 @@
 {
     "name": "marwanlotfy/blink",
-    "description": "Blink is a library that will make you have chat in your laravel application",
+    "description": "Blink, An API chat package integrate with your laravel application",
     "type": "library",
     "keywords": [
         "marwanLotfy",
