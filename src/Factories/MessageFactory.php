@@ -2,11 +2,13 @@
 
 namespace Blink\Factories;
 
-use Blink\Contracts\MessageFactoryContract;
-use Blink\Exceptions\BlinkException;
 use Blink\Models\Chat;
 use Blink\Models\Message;
+use Blink\Models\ChatImage;
 use Blink\Models\TextMessage;
+use Blink\Models\ImagesMessage;
+use Blink\Exceptions\BlinkException;
+use Blink\Contracts\MessageFactoryContract;
 
 class MessageFactory implements MessageFactoryContract
 {
@@ -24,9 +26,9 @@ class MessageFactory implements MessageFactoryContract
             case 'text':
                 $this->createTextMessage($data['body']);
                 break;
-            // case 'images':
-            //     $this->createImagesMessage($data);
-            //     break;
+            case 'images':
+                $this->createImagesMessage($data['caption'],$data['images']);
+                break;
             
             default:
                 throw new BlinkException("can't create message without specify message type");
@@ -39,6 +41,19 @@ class MessageFactory implements MessageFactoryContract
     private function createTextMessage(string $body)
     {
         $this->messageable = TextMessage::create(['body'=>$body]);
+        return $this;
+    }
+
+    private function createImagesMessage(string $caption,array $images)
+    {
+        $this->messageable = ImagesMessage::create(['caption'=>$caption]);
+        foreach ($images as $image) {
+            $attributes[]=[
+                'images_message_id' => $this->messageable->id,
+                'path' => $image,
+            ];
+        }
+        ChatImage::insert($attributes);
         return $this;
     }
 }

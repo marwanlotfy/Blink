@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Blink\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,7 +21,7 @@ class MessageInfo extends Model
     protected $fillable = [
         'delivered',
         'seen',
-        'chat_message_id',
+        'message_id',
         'reciever_id',
     ];
 
@@ -33,6 +33,18 @@ class MessageInfo extends Model
     public function reciever()
     {
         return $this->belongsTo(config("blink.defaults.user.model"),'reciever_id');
+    }
+
+    public static function infromUsers($messageId,$users)
+    {
+        $arry = [];
+        foreach($users as $user){
+            $arry[] = [ 
+                'message_id' =>  $messageId,
+                'reciever_id' => $user,
+            ];
+        }
+        self::insert($arry);
     }
 
 }

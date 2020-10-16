@@ -44,7 +44,9 @@ return [
                 |--------------------------------------------------------------------------
                 */
                 'create' => [
-                    'auth:api'
+                    'auth:api',
+                    Blink\Http\Middleware\ChatParticipant::class,
+                    Blink\Http\Middleware\UserNotBanned::class,
                 ],
                 /*
                 |--------------------------------------------------------------------------
@@ -52,7 +54,8 @@ return [
                 |--------------------------------------------------------------------------
                 */
                 'list' => [
-                    'auth:api'
+                    'auth:api',
+                    Blink\Http\Middleware\ChatParticipant::class,
                 ],
                 /*
                 |--------------------------------------------------------------------------
@@ -63,9 +66,14 @@ return [
                     'update' => [
                         'auth:api'
                     ],
+                    'list' => [
+                        'auth:api',
+                        Blink\Http\Middleware\ChatParticipant::class,
+                    ],
                 ],
             ]
 
         ]
-    ]
+    ],
+    'storage' => storage_path('local'),
 ];

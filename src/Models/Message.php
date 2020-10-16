@@ -13,7 +13,7 @@ class Message extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $with = ['sender','messageInfos','messageable'];
+    protected $with = ['sender','messageable'];
 
     public $timestamps = true;
 
@@ -53,13 +53,24 @@ class Message extends Model
 
     public function create(Chat $chat,$messagble) : self
     {
-        return parent::create([
+        $senderId = Auth::user()->id;
+        $message = parent::create([
             'messageable_id' => $messagble->id,
             'messageable_type' => get_class($messagble),
-            'sender_id' => 1, // for now
-            // 'sender_id' => Auth::user()->id,
+            'sender_id' => $senderId,
             'chat_id' => $chat->id,
         ]);
+        $notifiedUsers = [];
+
+        foreach($chat->users as $user){
+            if ($senderId != $user->id) {
+                $notifiedUsers[] = $user->id;
+            }
+        }
+
+        MessageInfo::infromUsers($message->id,$notifiedUsers);
+
+        return $message;
     }
 
     public function getTime()

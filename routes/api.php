@@ -10,4 +10,4 @@ Route::get('/chat/{chatId}/message', '\Blink\Http\Controllers\MessageController@
 
 Route::post('/chat/{chatId}/message','\Blink\Http\Controllers\MessageController@store')->middleware(config('blink.routes.middleware.message.create', []));
 
-Route::put('/chat/message/{messageId}/info','\Blink\Http\Controllers\MessageInfoController@update')->middleware(config('blink.routes.middleware.message.info.update', []));
+Route::get('/chat/{chatId}/message/{messageId}/info','\Blink\Http\Controllers\MessageInfoController@index')->middleware(config('blink.routes.middleware.message.info.list', []));

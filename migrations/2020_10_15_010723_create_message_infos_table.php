@@ -17,13 +17,8 @@ class CreateMessageInfosTable extends Migration
             $table->increments('id');
             $table->boolean('delivered')->default(0);
             $table->boolean('seen')->default(0);
-            $table->unsignedInteger('chat_id');
-            $table->foreign('chat_id')
-            ->references('id')->on('chats')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->unsignedInteger('chat_message_id');
-            $table->foreign('chat_message_id')
+            $table->unsignedInteger('message_id');
+            $table->foreign('message_id')
             ->references('id')->on('chat_messages')
             ->onDelete('cascade')
             ->onUpdate('cascade');

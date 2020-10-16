@@ -6,23 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TextMessage extends Model
+class ChatImage extends Model
 {
     use HasFactory,SoftDeletes;
-
+    
     protected $dates = ['deleted_at'];
 
     public $timestamps = true;
 
-    protected $table = 'chat_text_messages';
+    protected $table = 'chat_images';
 
     protected $fillable = [
-        'body'
+        'path',
+        'images_message_id'
     ];
 
-    public function message()
+    public function imagesMessage()
     {
-        return $this->morphOne('\Blink\Models\Message', 'messageable');
+        return $this->belongsTo('\Blink\Models\ImagesMessage');
     }
-
 }
