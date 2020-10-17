@@ -21,6 +21,8 @@ class ChatImage extends Model
         'images_message_id'
     ];
 
+    protected $hidden = ['images_message_id','id','deleted_at','created_at','updated_at'];
+
     public function imagesMessage()
     {
         return $this->belongsTo('\Blink\Models\ImagesMessage');

@@ -20,6 +20,8 @@ class Chat extends Model
 
     protected $table = 'chats';
 
+    protected $hidden =['deleted_at','updated_at','created_at'];
+
     protected $messageFactory;
 
     public function __construct()
@@ -52,6 +54,11 @@ class Chat extends Model
         ->paginate(config("blink.chat.pages",25));
 
         return $chats;
+    }
+
+    public static function isExist($usersId)
+    {
+        return self::for($usersId)->count();
     }
 
     public static function create($data)

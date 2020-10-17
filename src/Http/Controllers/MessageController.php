@@ -25,11 +25,6 @@ class MessageController extends Controller
         return response()->json($messages,200);
     }
 
-    public function getMedia($messageId)
-    {
-        
-    }
-
     public function store($chatId,Request $request)
     {
         $request->validate([
@@ -39,7 +34,7 @@ class MessageController extends Controller
                 Rule::in($this->avaliableTypes),
             ],
             'body' => 'required_if:type,text|string',
-            'caption' => 'required_if:type,images|string',
+            'caption' => 'nullable|string',
             'images' => 'required_if:type,images|array',
             'images.*' => 'required_if:type,images|file|mimes:jpeg,bmp,png',
         ]);
@@ -49,10 +44,13 @@ class MessageController extends Controller
         $chat = Chat::findOrFail($chatId);
 
         if ($request->has('images')) {
+            $data['caption'] = $data['caption'] ?? null;
             $imagePaths = [];
             foreach($request->images as $uploadedFile){
+                $ext = $uploadedFile->getClientOriginalExtension();
                 $filename = time().$uploadedFile->getClientOriginalName();
                 $filename = rtrim(strtr(base64_encode($filename), '+/', '-_'), '=');
+                $filename .= '.'.$ext;
                 $uploadedFile->storeAs(config('blink.storage')."/chat/$chatId/image/", $filename);
                 $imagePaths[]=config('app.url')."/chat/$chatId/image/".$filename;
             }

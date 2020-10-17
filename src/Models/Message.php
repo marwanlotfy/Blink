@@ -19,12 +19,16 @@ class Message extends Model
 
     protected $table = 'chat_messages';
 
+    protected $hidden = ['chat_id','sender_id','updated_at','messageable_id','messageable_type','deleted_at'];
+
     protected $fillable = [
         'messageable_id',
         'messageable_type',
         'chat_id',
         'sender_id',
     ];
+
+    protected $appends = ['type'];
 
     public function chat()
     {
@@ -76,5 +80,17 @@ class Message extends Model
     public function getTime()
     {
         return $this->updated_at;
+    }
+
+    public function getTypeAttribute()
+    {
+        switch (get_class($this->messageable)) {
+            case TextMessage::class:
+                return "text";
+                break;
+            case ImagesMessage::class:
+                return "images";
+                break;
+        }
     }
 }

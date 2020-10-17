@@ -44,7 +44,7 @@ class MessageFactory implements MessageFactoryContract
         return $this;
     }
 
-    private function createImagesMessage(string $caption,array $images)
+    private function createImagesMessage(?string $caption,array $images)
     {
         $this->messageable = ImagesMessage::create(['caption'=>$caption]);
         foreach ($images as $image) {
