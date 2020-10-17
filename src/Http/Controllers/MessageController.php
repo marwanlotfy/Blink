@@ -15,7 +15,7 @@ class MessageController extends Controller
 
     public function __construct()
     {
-        $this->avaliableTypes = ['text', 'images'];
+        $this->avaliableTypes = ['text', 'images','location'];
     }
 
     public function index($chatId)
@@ -37,6 +37,8 @@ class MessageController extends Controller
             'caption' => 'nullable|string',
             'images' => 'required_if:type,images|array',
             'images.*' => 'required_if:type,images|file|mimes:jpeg,bmp,png',
+            'latitude' => 'required_if:type,location|numeric',
+            'longitude' => 'required_if:type,location|numeric',
         ]);
 
         $data = $request->all();

@@ -91,6 +91,9 @@ class Message extends Model
             case ImagesMessage::class:
                 return "images";
                 break;
+            case LocationMessage::class:
+                return "Location";
+                break;
         }
     }
 }

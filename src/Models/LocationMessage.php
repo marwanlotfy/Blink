@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TextMessage extends Model
+class LocationMessage extends Model
 {
     use HasFactory,SoftDeletes;
 
@@ -14,10 +14,11 @@ class TextMessage extends Model
 
     public $timestamps = true;
 
-    protected $table = 'chat_text_messages';
+    protected $table = 'location_messages';
 
     protected $fillable = [
-        'body'
+        'latitude',
+        'longitude',
     ];
 
     protected $hidden = ['id','updated_at','created_at','deleted_at'];
@@ -26,5 +27,4 @@ class TextMessage extends Model
     {
         return $this->morphOne('\Blink\Models\Message', 'messageable');
     }
-
 }

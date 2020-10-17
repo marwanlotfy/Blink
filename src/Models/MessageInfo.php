@@ -25,6 +25,8 @@ class MessageInfo extends Model
         'reciever_id',
     ];
 
+    protected $hidden = ['message_id','reciever_id','updated_at','deleted_at'];
+
     public function message()
     {
         return $this->belongsTo('\Blink\Models\Message');

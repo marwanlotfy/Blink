@@ -7,6 +7,7 @@ use Blink\Models\Message;
 use Blink\Models\ChatImage;
 use Blink\Models\TextMessage;
 use Blink\Models\ImagesMessage;
+use Blink\Models\LocationMessage;
 use Blink\Exceptions\BlinkException;
 use Blink\Contracts\MessageFactoryContract;
 
@@ -28,6 +29,9 @@ class MessageFactory implements MessageFactoryContract
                 break;
             case 'images':
                 $this->createImagesMessage($data['caption'],$data['images']);
+                break;
+            case 'location':
+                $this->createLocationMessage($data['latitude'],$data['longitude']);
                 break;
             
             default:
@@ -54,6 +58,12 @@ class MessageFactory implements MessageFactoryContract
             ];
         }
         ChatImage::insert($attributes);
+        return $this;
+    }
+
+    private function createLocationMessage(float $latitude,float $longitude)
+    {
+        $this->messageable = LocationMessage::create(['latitude'=>$latitude,'longitude'=>$longitude]);
         return $this;
     }
 }

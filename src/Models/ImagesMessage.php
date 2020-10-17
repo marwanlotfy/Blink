@@ -22,6 +22,8 @@ class ImagesMessage extends Model
         'caption'
     ];
 
+    protected $hidden = ['id','updated_at','created_at','deleted_at'];
+    
     public function images()
     {
         return $this->hasMany('\Blink\Models\ChatImage');
