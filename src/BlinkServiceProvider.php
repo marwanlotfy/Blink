@@ -13,7 +13,9 @@ class BlinkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/blink.php', 'blink'
+        );
     }
 
     /**
