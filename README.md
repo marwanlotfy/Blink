@@ -1,11 +1,13 @@
 # Very short description of the package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/marwanlotfy/blink.svg?style=flat-square)](https://packagist.org/packages/marwanlotfy/blink)
-[![Build Status](https://img.shields.io/travis/marwanlotfy/blink/master.svg?style=flat-square)](https://travis-ci.org/marwanlotfy/blink)
 [![Quality Score](https://img.shields.io/scrutinizer/g/marwanlotfy/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/marwanlotfy/blink)
 [![Total Downloads](https://img.shields.io/packagist/dt/marwanlotfy/blink.svg?style=flat-square)](https://packagist.org/packages/marwanlotfy/blink)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Hii , Blink is a chat package integerate with laravel
+
+it's easy to install , provides you with apis for chats,messages,message informations and support messages of type (text , images , voice , location and video )
+
 
 ## Installation
 
@@ -20,10 +22,20 @@ composer require marwanlotfy/blink
 ``` php
 php artisan migrate
 ```
-You need to publish config file and override the defaults option
+You need to publish config file and override the defaults options
 ``` php
 php artisan vendor:publish --tag=blink-config
 ```
+
+try 
+``` php
+php artisan route:list
+```
+it will list chat routes for you
+
+Route Samples
+
+
 
 ### Changelog
 
