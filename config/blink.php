@@ -75,5 +75,7 @@ return [
 
         ]
     ],
-    'storage' => storage_path('local'),
+    'storage' => [
+        'disk' => 'local'
+    ],
 ];

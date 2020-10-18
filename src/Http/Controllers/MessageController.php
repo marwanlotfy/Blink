@@ -60,13 +60,13 @@ class MessageController extends Controller
 
     public function uploadMedia( $chatId ,...$mediaFiles) : array
     {
-        foreach($mediaFiles as $uploadedFile){
+        foreach($mediaFiles as $key => $uploadedFile){
             $ext = $uploadedFile->getClientOriginalExtension();
             $filename = time().$uploadedFile->getClientOriginalName();
             $filename = rtrim(strtr(base64_encode($filename), '+/', '-_'), '=');
             $filename .= '.'.$ext;
-            $uploadedFile->storeAs(config('blink.storage')."/chat/$chatId/", $filename);
-            $uploadedFiles[]=config('app.url')."/chat/$chatId/".$filename;
+            Storage::disk(config('blink.storage.driver'))->put("/chat/$chatId/".$filename,request()->file($key));
+            $uploadedFiles[]=config('app.url')."/api/chat/$chatId/".$filename;
         }
 
         return $uploadedFiles;

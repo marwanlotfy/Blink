@@ -86,4 +86,15 @@ class Chat extends Model
     {
         return DB::table('chat_user')->where('chat_id',$chatId)->where('user_id',$usersId)->where('banned',true)->first();
     }
+
+    public function banUsers(array $usersId = null )
+    {
+        return DB::table('chat_user')
+            ->where('chat_id',$this->id)
+            ->when($usersId,function ($q) use ($usersId)
+            {
+                return $q->whereIn('user_id',$usersId);
+                
+            })->update(['banned'=>true]);
+    }
 }

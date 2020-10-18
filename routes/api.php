@@ -14,5 +14,5 @@ Route::prefix('api')->group(function ($router)
     
     $router->get('/chat/{chatId}/message/{messageId}/info','\Blink\Http\Controllers\MessageInfoController@index')->middleware(config('blink.routes.middleware.message.info.list', []));
     
-    $router->get('/chat/{chatId}/{media}','\Blink\Http\Controllers\ChatController@getMedia')->middleware(config('blink.routes.middleware.message.list', []));
+    $router->get('/chat/{chatId}/{media}','\Blink\Http\Controllers\ChatController@getMedia')->name('blink.media')->middleware(config('blink.routes.middleware.message.list', []));
 });

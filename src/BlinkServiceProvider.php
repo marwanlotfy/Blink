@@ -16,6 +16,9 @@ class BlinkServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/blink.php', 'blink'
         );
+        $this->app->singleton('blink', function () {
+            return new Blink;
+        });
     }
 
     /**

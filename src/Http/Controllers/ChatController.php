@@ -36,6 +36,6 @@ class ChatController extends Controller
 
     public function getMedia($chatId,$media)
     {
-        return Storage::download(config('blink.storage')."/chat/$chatId/$media");
+        return Storage::disk(config('blink.storage.driver'))->download("/chat/$chatId/$media");
     }
 }
