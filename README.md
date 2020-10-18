@@ -36,6 +36,29 @@ it will list chat routes for you
 Route Samples
 ![Blink APIs](https://github.com/marwanlotfy/Blink/blob/master/ChatAPIs.png)
 
+if you need your users hasChats you can use HasChats Trait
+```php
+use Blink\HasChats;
+```
+on your UserModel 
+
+and add 
+```php
+use HasChats;
+```
+inside User class 
+
+properties Added are 
+```php
+$user->chats;
+$user->unBannedChats;
+$user->bannedChats;
+```
+methodes Added are
+```php
+$user->leaveChat($chatId);
+```
+
 
 
 ### Changelog
