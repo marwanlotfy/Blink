@@ -15,7 +15,7 @@ class MessageController extends Controller
 
     public function __construct()
     {
-        $this->avaliableTypes = ['text', 'images','location'];
+        $this->avaliableTypes = ['text', 'images','location','audio'];
     }
 
     public function index($chatId)
@@ -39,28 +39,36 @@ class MessageController extends Controller
             'images.*' => 'required_if:type,images|file|mimes:jpeg,bmp,png',
             'latitude' => 'required_if:type,location|numeric',
             'longitude' => 'required_if:type,location|numeric',
+            'audio' =>'required_if:type,audio|mimes:audio/mpeg,mpga,mp3,wav,aac',
         ]);
 
         $data = $request->all();
 
         $chat = Chat::findOrFail($chatId);
 
-        if ($request->has('images')) {
+        if ($request->type == 'images') {
             $data['caption'] = $data['caption'] ?? null;
-            $imagePaths = [];
-            foreach($request->images as $uploadedFile){
-                $ext = $uploadedFile->getClientOriginalExtension();
-                $filename = time().$uploadedFile->getClientOriginalName();
-                $filename = rtrim(strtr(base64_encode($filename), '+/', '-_'), '=');
-                $filename .= '.'.$ext;
-                $uploadedFile->storeAs(config('blink.storage')."/chat/$chatId/image/", $filename);
-                $imagePaths[]=config('app.url')."/chat/$chatId/image/".$filename;
-            }
-            $data['images'] = $imagePaths;
+            $data['images'] = $this->uploadMedia($chatId,...$request->images);
+        }elseif ($request->type == 'audio'){
+            $data['audio'] = $this->uploadMedia($chatId,$request->audio)[0];
         }
 
         $chat->newMessage($data);
 
         return response()->json(['success'=>true],201);
+    }
+
+    public function uploadMedia( $chatId ,...$mediaFiles) : array
+    {
+        foreach($mediaFiles as $uploadedFile){
+            $ext = $uploadedFile->getClientOriginalExtension();
+            $filename = time().$uploadedFile->getClientOriginalName();
+            $filename = rtrim(strtr(base64_encode($filename), '+/', '-_'), '=');
+            $filename .= '.'.$ext;
+            $uploadedFile->storeAs(config('blink.storage')."/chat/$chatId/", $filename);
+            $uploadedFiles[]=config('app.url')."/chat/$chatId/".$filename;
+        }
+
+        return $uploadedFiles;
     }
 }

@@ -12,4 +12,4 @@ Route::post('/chat/{chatId}/message','\Blink\Http\Controllers\MessageController@
 
 Route::get('/chat/{chatId}/message/{messageId}/info','\Blink\Http\Controllers\MessageInfoController@index')->middleware(config('blink.routes.middleware.message.info.list', []));
 
-Route::get('/chat/{chatId}/image/{image}','\Blink\Http\Controllers\ChatController@getImage')->middleware(config('blink.routes.middleware.message.list', []));
+Route::get('/chat/{chatId}/{media}','\Blink\Http\Controllers\ChatController@getMedia')->middleware(config('blink.routes.middleware.message.list', []));

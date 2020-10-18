@@ -94,6 +94,9 @@ class Message extends Model
             case LocationMessage::class:
                 return "Location";
                 break;
+            case AudioMessage::class:
+                return "audio";
+                break;
         }
     }
 }

@@ -6,6 +6,7 @@ use Blink\Models\Chat;
 use Blink\Models\Message;
 use Blink\Models\ChatImage;
 use Blink\Models\TextMessage;
+use Blink\Models\AudioMessage;
 use Blink\Models\ImagesMessage;
 use Blink\Models\LocationMessage;
 use Blink\Exceptions\BlinkException;
@@ -33,6 +34,9 @@ class MessageFactory implements MessageFactoryContract
             case 'location':
                 $this->createLocationMessage($data['latitude'],$data['longitude']);
                 break;
+            case 'audio':
+                $this->createAudioMessage($data['audio']);
+                break;
             
             default:
                 throw new BlinkException("can't create message without specify message type");
@@ -58,6 +62,12 @@ class MessageFactory implements MessageFactoryContract
             ];
         }
         ChatImage::insert($attributes);
+        return $this;
+    }
+
+    private function createAudioMessage(string $audio)
+    {
+        $this->messageable = AudioMessage::create(['path'=>$audio]);
         return $this;
     }
 

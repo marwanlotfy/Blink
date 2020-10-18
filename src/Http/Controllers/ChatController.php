@@ -34,8 +34,8 @@ class ChatController extends Controller
         return response()->json(['success'=>true],201);
     }
 
-    public function getImage($chatId,$image)
+    public function getMedia($chatId,$media)
     {
-        return Storage::download(config('blink.storage')."/chat/$chatId/image/$image");
+        return Storage::download(config('blink.storage')."/chat/$chatId/$media");
     }
 }
