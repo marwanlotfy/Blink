@@ -1,4 +1,4 @@
-# Very short description of the package
+# Blink , Chat Package 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/marwanlotfy/blink.svg?style=flat-square)](https://packagist.org/packages/marwanlotfy/blink)
 [![Quality Score](https://img.shields.io/scrutinizer/g/marwanlotfy/blink.svg?style=flat-square)](https://scrutinizer-ci.com/g/marwanlotfy/blink)
@@ -8,6 +8,12 @@ Hii , Blink is a chat package integerate with laravel
 
 it's easy to install , provides you with apis for chats,messages,message informations and support messages of type (text , images , voice , location and video )
 
+## Features
+
+- Restful APIs for Chat (create , list)
+- Restful APIs for Message (create , list , get sended media)
+- Supported Message Types (Audio , Video , Images , Text , Location )
+- Restful APIs for Message Info ( list , seen , deliverd )
 
 ## Installation
 
