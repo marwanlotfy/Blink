@@ -30,5 +30,8 @@
             ]
         }
     },
-    "require": {}
+    "require": {
+        "php": "^7.3",
+        "illuminate/support": "^8.10"
+    }
 }
