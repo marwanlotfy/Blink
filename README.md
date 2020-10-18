@@ -34,6 +34,7 @@ php artisan route:list
 it will list chat routes for you
 
 Route Samples
+![Blink APIs](https://github.com/marwanlotfy/Blink/blob/master/ChatAPIs.png)
 
 
 
