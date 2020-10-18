@@ -18,22 +18,16 @@ composer require marwanlotfy/blink
 ## Usage
 
 ``` php
-// Usage description here
+php artisan migrate
 ```
-
-### Testing
-
-``` bash
-composer test
+You need to publish config file and override the defaults option
+``` php
+php artisan vendor:publish --tag=blink-config
 ```
 
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
@@ -47,7 +41,3 @@ If you discover any security related issues, please email marwandevelop@gmail.co
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
