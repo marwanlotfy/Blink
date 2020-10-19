@@ -4,10 +4,12 @@ namespace Blink;
 
 use Blink\Exceptions\BlinkException;
 use Blink\Models\Chat as ModelsChat;
+use Blink\Models\ChatGroup;
 
 class Blink
 {
     private $chat;
+    private $hasGroup;
 
     public function createChat(int ...$users)
     {
@@ -23,7 +25,7 @@ class Blink
         return $this;
     }
 
-    public function deleteChat()
+    public function delete()
     {
         try {
             $this->chat->delete();
@@ -38,6 +40,7 @@ class Blink
     {
         try {
             $this->chat = ModelsChat::findOrFail($chatId);
+            $this->hasGroup = !!$this->chat->group;
         }catch (\Throwable $th) {
             throw new BlinkException($th->getMessage(), 1);
         }
@@ -56,10 +59,20 @@ class Blink
         return $this;
     }
 
-    public function suspendChat()
+    public function suspend()
     {
         try {
             $this->chat->banUsers();
+        } catch (\Throwable $th) {
+            throw new BlinkException($th->getMessage(), 1);
+        }
+        return $this;
+    }
+
+    public function unSuspend()
+    {
+        try {
+            $this->chat->unBanUsers();
         } catch (\Throwable $th) {
             throw new BlinkException($th->getMessage(), 1);
         }
@@ -73,6 +86,50 @@ class Blink
         } catch (\Throwable $th) {
             throw new BlinkException($th->getMessage(), 1);
         }
+        return $this;
+    }
+
+    public function unBanUsers(...$users)
+    {
+        try {
+            $this->chat->unBanUsers($users);
+        } catch (\Throwable $th) {
+            throw new BlinkException($th->getMessage(), 1);
+        }
+        return $this;
+    }
+
+    public function markAsGroup(int $creatorId,string $groupName,string $description,string $icon)
+    {
+        try {
+            if ($this->hasGroup) {
+                throw new BlinkException("Already Marked With Group", 1);
+            }
+            ChatGroup::create([
+                'chat_id' => $this->chat->id,
+                'created_by' => $creatorId,
+                'name' => $groupName,
+                'icon' => $icon,
+                'description' => $description
+            ]);
+            $this->hasGroup = true;
+        } catch (\Throwable $th) {
+            throw new BlinkException($th->getMessage(), 1);
+        }
+
+        return $this;
+    }
+
+    public function makeGroupAdmin(...$users)
+    {
+        try {
+            if($this->hasGroup){
+                $this->chat->group->admins()->attach($users);
+            }
+        } catch (\Throwable $th) {
+            throw new BlinkException($th->getMessage(), 1);
+        }
+
         return $this;
     }
 }

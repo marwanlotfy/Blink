@@ -44,6 +44,11 @@ class Chat extends Model
         return $this->hasOne('\Blink\Models\Message')->latest();
     }
 
+    public function group()
+    {
+        return $this->belongsTo('\Blink\Models\Chat');
+    }
+
     public static function for($usersId)
     {
         $chats = self::with(['users','lastMessage'])->whereHas('users',function ($q) use($usersId)
@@ -67,6 +72,8 @@ class Chat extends Model
         $chat->save();
         $chat->users()->attach($data['users']);
         event(new NewChatCreated($chat));
+
+        return $chat;
     }
 
     public function newMessage($data)
@@ -96,5 +103,16 @@ class Chat extends Model
                 return $q->whereIn('user_id',$usersId);
                 
             })->update(['banned'=>true]);
+    }
+
+    public function unBanUsers(array $usersId = null )
+    {
+        return DB::table('chat_user')
+            ->where('chat_id',$this->id)
+            ->when($usersId,function ($q) use ($usersId)
+            {
+                return $q->whereIn('user_id',$usersId);
+                
+            })->update(['banned'=>false]);
     }
 }

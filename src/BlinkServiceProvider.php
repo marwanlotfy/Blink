@@ -28,10 +28,13 @@ class BlinkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/blink.php' => config_path('blink.php')
-        ],'blink-config');
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/blink.php' => config_path('blink.php')
+            ],'blink-config');
+        }
     }
 }

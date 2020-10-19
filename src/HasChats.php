@@ -4,6 +4,7 @@ namespace Blink;
 
 use Blink\Exceptions\BlinkException;
 use Blink\Models\Chat;
+use Blink\Models\ChatGroup;
 use Illuminate\Support\Facades\DB;
 
 trait HasChats
@@ -16,6 +17,11 @@ trait HasChats
     public function unBannedChats()
     {
         return $this->chats()->where('banned',false);
+    }
+
+    public function groupsAdmin()
+    {
+        return $this->belongsToMany(ChatGroup::class,'chat_group_admin');
     }
 
     public function bannedChats()
