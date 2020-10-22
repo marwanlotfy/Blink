@@ -65,6 +65,42 @@ methodes Added are
 $user->leaveChat($chatId);
 ```
 
+you can use Blink Facade 
+
+```php
+use Blink\Facades\Blink;
+
+Blink::createChat(...$usersIds);
+Blink::getChat($chatId)->delete();
+Blink::getChat($chatId)->createTextMessage(String $body);
+Blink::getChat($chatId)->unSuspend();
+Blink::getChat($chatId)->suspend();
+Blink::getChat($chatId)->banUsers(...$users);
+Blink::getChat($chatId)->unBanUsers(...$users);
+Blink::getChat($chatId)->markAsGroup($creatorId,$groupName,$description,$icon)->makeGroupAdmin(...$users);
+```
+
+You can keep adding admins to chat if is marked as Group 
+
+
+when you create chat there is an event will be fired 
+
+```php
+Blink\Events\NewChatCreated
+```
+so you can listen on this event and handle the logic you want to notify your users 
+
+the event has $chat property
+
+when you send chat Message there is an event will be fired 
+
+```php
+Blink\Events\NewChatMessage
+```
+so you can listen on this event and handle the logic you want to notify your users  that new message created
+
+the event has $message property
+
 
 
 ### Changelog
